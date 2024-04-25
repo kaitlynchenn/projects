@@ -1,0 +1,7 @@
+In recent years, it has become increasingly important to develop efficient optimization algorithms. The most common such algorithm used in practice is gradient descent, which we have explored in this class. Yet gradient descent is not optimal even amongst first-order algorithms which only use information about the function and its gradient. Nesterov proposed an acceleration of gradient descent, called “accelerated gradient descent”, which provably achieved a better convergence rate than gradient descent, but was relatively mysterious and unmotivated. Recently, there have been many papers which interpret and improve accelerated gradient descent in the context of other optimization algorithms. In this project, we will explore and implement one such paper which uses a generalization of gradient descent, namely mirror descent, to recover Nesterov’s accelerated gradient descent and achieve better convergence rates than gradient descent. 
+
+This project is based on
+
+“A Method of Solving a Convex Programming Problem with Convergence Rate O(1/k^2),” Nesterov (1983).
+
+“Linear Coupling: An Ultimate Unification of Gradient and Mirror Descent,” Allen-Zhu, Orecchia (2016).
