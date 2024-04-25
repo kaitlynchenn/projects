@@ -1,0 +1,3 @@
+• Recreated a version-control system mimicking Git in Java
+• Built commits, branches, merges, checkouts, logs and resets using serialization and command line programming;
+performing in logarithmic time by employing hashing and tree traversal
