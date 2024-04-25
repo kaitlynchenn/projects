@@ -1,0 +1,3 @@
+• Created a generalizable replica of WWII German Enigma cipher machine with Java
+• Handled encryption and decryption using string manipulation, file I/O, Regex, object-oriented design, and Scanner data
+structure to replicate mechanical elements of the original machine
