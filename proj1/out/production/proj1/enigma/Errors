@@ -1,0 +1,88 @@
+Permutations:
+- check that every character in the cycle is part of alphabet
+- if the cycle looks like "((ABCD)"
+    - errors
+
+Rotors:
+
+Machine:
+- insertRotors(String[] rotors)
+    - check the array rotors is the same size as _numRotors (instance variable)
+    - check each element in rotors is in allrotors
+    - invalid configuration error
+    - check if rotors were repeated (either in Machine or Main)
+- setRotors
+    -You can assume that the input contains only valid characters, but you cannot assume anything else about the input (is there anything you can think to check for in order to validate the input
+- check number of pawls is equal to the number of moving rotors
+
+Main:
+- Look at input and output section of spec
+- check the configuration file is in the right format
+- I am having trouble checking for errors for the permutation cycle within the readRotor method. Last night, I realized that I failed to incorporate "Error: bad cycle specification syntax" after finish writing the code for readRotor. I have spent a lot
+  of hours trying to figure out a solution but still stuck. My idea right now is to set up a delimiter to check for parenthesis (which I did not original do as I used the default whitespace delimiter), but I am not sure where to go from there. Can someone give me any tips? Thanks!
+    - Instead of using parentheses as a delimiter, consider iterating through the string and checking that each open parenthesis is "closed off" by a corresponding closed parentheses. You can do this by simply tracking whenever you see an open parenthesis in a boolean/some other variable.
+- Will the autograder check which type of error is thrown? Like an EnigmaException vs. an NoSuchElementException?
+    - Please throw an EnigmaException or use throw error("...");
+-Are we required to throw an EnigmaException within Main for all invalid configurations or inputs? When writing previous classes like Permutation or Alphabet I included code to throw an EnigmaException for certain edge cases (for example if the Alphabet contains "*", "(", or ")" ). Is it ok if we throw the exception there rather than in Main?
+- check that for reflectors, each cycle has 2 letters exactly & 13 cycles.
+- check that all rotor types are of either M, N, or R
+- *B Beta III IV I AXLE(HQ)  (EX)(IP)(TR)(BY)
+    - this would error because no space between AXLE and (HQ)
+
+
+
+ while (_input.hasNext("\\*(\\s+\\w+)+((\\s+\\(([^\\*\\(\\)]((\\s+)?)){2}\\))+)?\\n[^\\*\\(\\)]+")) {
+             String rotor = _input.next("\\*(\\s+\\w+)+((\\s+\\(([^\\*\\(\\)]((\\s+)?)){2}\\))+)?\\n[^\\*\\(\\)]+");
+             Scanner scanner = new Scanner(rotor);
+             String[] R = new String[M.numRotors()];
+             scanner.next();
+             for (int i = 0; i < M.numRotors(); i++) {
+                 R[i] = scanner.next();
+             }
+             _setting = scanner.next();
+             if (scanner.hasNext("\\(([^\\*\\(\\)]((\\s+)?)){2}\\)")) {
+                 String permcycles = "";
+                 while (scanner.hasNext("\\(([^\\*\\(\\)]((\\s+)?)){2}\\)")) {
+                     permcycles += scanner.next("\\(([^\\*\\(\\)]((\\s+)?)){2}\\)");
+                 }
+                 Permutation perm = new Permutation(permcycles, _alphabet);
+                 M.setPlugboard(perm);
+             }
+             M.insertRotors(R);
+             M.setRotors(_setting);
+             String wholeMsg = "";
+             while (scanner.hasNext()) {
+                 wholeMsg += M.convert(scanner.next());
+             }
+         }
+     }
+
+    private void process() {
+        Machine newMachine = readConfig();
+        //int line = 0;
+        String machineSettings = _input.nextLine();
+        if (/*line == 1 && */!machineSettings.contains("*")) {
+            throw new EnigmaException("* not found");
+        }
+        setUp(newMachine, machineSettings);
+        while (_input.hasNextLine()) {
+            //line++;
+            //String machineSettings = _input.nextLine();
+            String currLine = _input.nextLine();
+            while (!currLine.contains("*")) {
+                String result;
+                result = newMachine.convert(/*_input.nextLine()*/currLine.replaceAll(" ", ""));
+                result = result.replaceAll(" ", "");
+                printMessageLine(result);
+                if (!_input.hasNextLine()) break;
+                currLine = _input.nextLine();
+            }
+            if (currLine.contains("*")) {
+                setUp(newMachine, currLine);
+            }
+        }
+    }
+
+            String memories = "([^\\*\\(\\)]+\\s+)(M\\w+|N|R)\\s+(\\(([^\\*\\(\\)])+\\)\\s*)+";
+            String memoriespt2 = "([^\\*\\(\\)]+\\s+)(M\\w+|N|R)\\s+(\\(([^\\*\\(\\)])+\\)\\s*)+";
+            String memoriespt3 = "\\s+(\\(([^\\*\\(\\)])+\\)\\s*)+";
